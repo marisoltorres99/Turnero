@@ -2,6 +2,7 @@ from .db import db
 from .estados_turno import EstadoTurno
 
 class Turno(db.Model):
+    __tablename__ = "turno"
     id = db.Column(db.Integer, primary_key=True)
     fecha_hora = db.Column(db.DateTime, nullable=False)
     estado = db.Column(db.String(20), nullable=False, default=EstadoTurno.PENDIENTE)
