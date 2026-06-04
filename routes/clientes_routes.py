@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, abort
 from models.cliente import Cliente
 from models.db import db
 
@@ -50,7 +50,7 @@ def desactivar(id):
     cliente = db.session.get(Cliente, id)
 
     if not cliente:
-        return "Cliente no encontrado"
+        abort(404)
 
     cliente.activo = False
 
@@ -63,7 +63,7 @@ def activar(id):
     cliente = db.session.get(Cliente, id)
 
     if not cliente:
-        return "Cliente no encontrado"
+        abort(404)
 
     cliente.activo = True
 
