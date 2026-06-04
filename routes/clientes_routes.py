@@ -16,7 +16,6 @@ def nuevo():
         apellido = request.form["apellido"]
         telefono = request.form["telefono"]
         email = request.form["email"]
-        activo = True
 
         nuevo = Cliente(nombre=nombre, apellido=apellido, telefono=telefono, email=email)
 
@@ -26,4 +25,23 @@ def nuevo():
         return redirect(url_for("cliente.listar"))
     
     return render_template("clientes/form.html")
+
+@cliente_bp.route("/editar/<int:id>", methods=["GET", "POST"])
+def editar(id):
+    cliente = db.session.get(Cliente, id)
+
+    if not cliente:
+        return "Cliente no encontrado"
+
+    if request.method == "POST":
+        cliente.nombre = request.form["nombre"]
+        cliente.apellido = request.form["apellido"]
+        cliente.telefono = request.form["telefono"]
+        cliente.email = request.form["email"]
+
+        db.session.commit()
+
+        return redirect(url_for("cliente.listar"))
+
+    return render_template("clientes/form.html", cliente=cliente)
 

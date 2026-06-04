@@ -2,28 +2,34 @@
 
 {% block contenido %}
 
-<h1>Nuevo Cliente</h1>
+<h1>
+    {% if cliente %}
+        Editar cliente
+    {% else %}
+        Nuevo cliente
+    {% endif %}
+</h1>
 
 <form method="POST">
 
     <div>
         <label>Nombre</label>
-        <input type="text" name="nombre" required>
+        <input type="text" name="nombre" value="{{ cliente.nombre if cliente else '' }}" required>
     </div>
 
     <div>
         <label>Apellido</label>
-        <input type="text" name="apellido" required>
+        <input type="text" name="apellido" value="{{ cliente.apellido if cliente else '' }}" required>
     </div>
 
     <div>
         <label>Teléfono</label>
-        <input type="text" name="telefono">
+        <input type="text" name="telefono" value="{{ cliente.telefono if cliente else '' }}">
     </div>
 
     <div>
         <label>Email</label>
-        <input type="email" name="email" required>
+        <input type="email" name="email" value="{{ cliente.email if cliente else '' }}" required>
     </div>
 
     <button type="submit">

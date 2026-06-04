@@ -35,7 +35,9 @@
 
             <td>{{ c.email }}</td>
 
-            <td>Editar</td>
+            <td>
+            <a href="{{ url_for('cliente.editar', id=c.id) }}">Editar</a>
+            </td>
 
         </tr>
 
