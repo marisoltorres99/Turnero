@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sistema de Turnos</title>
+</head>
+<body>
+
+    <nav>
+
+        <div>
+
+            <a href="/">
+                Sistema de Turnos
+            </a>
+
+            <div>
+
+                <ul>
+
+                    <li>
+                        <a href="{{ url_for('cliente.listar') }}">
+                            Clientes
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+
+    <div>
+        {% block contenido %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>

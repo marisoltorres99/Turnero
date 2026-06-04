@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<h1>Nuevo Cliente</h1>
+
+<form method="POST">
+
+    <div>
+        <label>Nombre</label>
+        <input type="text" name="nombre" required>
+    </div>
+
+    <div>
+        <label>Apellido</label>
+        <input type="text" name="apellido" required>
+    </div>
+
+    <div>
+        <label>Teléfono</label>
+        <input type="text" name="telefono">
+    </div>
+
+    <div>
+        <label>Email</label>
+        <input type="email" name="email" required>
+    </div>
+
+    <button type="submit">
+        Guardar
+    </button>
+
+</form>
+
+{% endblock %}

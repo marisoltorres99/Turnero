@@ -1,8 +1,9 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_migrate import Migrate
 from models.cliente import Cliente
 from models.servicio import Servicio
 from models.turno import Turno
+from routes.clientes_routes import cliente_bp
 
 from models.db import db
 
@@ -14,3 +15,9 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
 migrate = Migrate(app, db)
+
+@app.route("/")
+def inicio():
+    return render_template("dashboard/index.html")
+
+app.register_blueprint(cliente_bp)
