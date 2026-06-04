@@ -45,3 +45,29 @@ def editar(id):
 
     return render_template("clientes/form.html", cliente=cliente)
 
+@cliente_bp.route("/desactivar/<int:id>", methods=["POST"])
+def desactivar(id):
+    cliente = db.session.get(Cliente, id)
+
+    if not cliente:
+        return "Cliente no encontrado"
+
+    cliente.activo = False
+
+    db.session.commit()
+
+    return redirect(url_for("cliente.listar"))
+
+@cliente_bp.route("/activar/<int:id>", methods=["POST"])
+def activar(id):
+    cliente = db.session.get(Cliente, id)
+
+    if not cliente:
+        return "Cliente no encontrado"
+
+    cliente.activo = True
+
+    db.session.commit()
+
+    return redirect(url_for("cliente.listar"))
+

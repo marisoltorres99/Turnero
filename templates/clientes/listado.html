@@ -37,6 +37,20 @@
 
             <td>
             <a href="{{ url_for('cliente.editar', id=c.id) }}">Editar</a>
+            
+            {% if c.activo %}
+
+            <form method="POST" action="{{ url_for('cliente.desactivar', id=c.id) }}" style="display:inline;">
+                <button type="submit">Desactivar</button>
+            </form>
+
+            {% else %}
+
+            <form method="POST" action="{{ url_for('cliente.activar', id=c.id) }}" style="display:inline;">
+                <button type="submit">Activar</button>
+            </form>
+
+            {% endif %}
             </td>
 
         </tr>
