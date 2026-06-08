@@ -4,6 +4,7 @@ from models.cliente import Cliente
 from models.servicio import Servicio
 from models.turno import Turno
 from routes.clientes_routes import cliente_bp
+from routes.servicios_routes import servicio_bp
 
 from models.db import db
 
@@ -21,3 +22,4 @@ def inicio():
     return render_template("dashboard/index.html")
 
 app.register_blueprint(cliente_bp)
+app.register_blueprint(servicio_bp)
