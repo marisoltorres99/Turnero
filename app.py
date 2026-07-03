@@ -5,6 +5,7 @@ from models.servicio import Servicio
 from models.turno import Turno
 from routes.clientes_routes import cliente_bp
 from routes.servicios_routes import servicio_bp
+from routes.turnos_routes import turnos_bp
 
 from models.db import db
 
@@ -23,3 +24,4 @@ def inicio():
 
 app.register_blueprint(cliente_bp)
 app.register_blueprint(servicio_bp)
+app.register_blueprint(turnos_bp)
