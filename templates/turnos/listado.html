@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<h1>Turnos</h1>
+
+<a href="{{ url_for('turno.nuevo') }}">Nuevo Turno</a>
+
+<div>
+
+    {% if turnos %}
+
+    <table>
+
+        <tr>
+            <th>ID</th>
+            <th>Fecha Y Hora</th>
+            <th>Estado</th>
+            <th>Observaciones</th>
+            <th>Acciones</th>
+        </tr>
+
+        {% for t in turnos %}
+
+        <tr>
+
+            <td>{{ t.id }}</td>
+
+            <td>{{ t.fecha_hora }}</td>
+
+            <td>{{ t.estado }}</td>
+
+            <td>{{ t.observaciones }}</td>
+
+            <td>
+            <a href="{{ url_for('turno.editar', id=t.id) }}">Editar</a>
+            
+            {% if s.activo %}
+
+            <form method="POST" action="{{ url_for('turno.cancelar', id=t.id) }}" style="display:inline;">
+                <button type="submit">Cancelar</button>
+            </form>
+
+            {% else %}
+
+            <form method="POST" action="{{ url_for('servicio.activar', id=s.id) }}" style="display:inline;">
+                <button type="submit">Activar</button>
+            </form>
+
+            {% endif %}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <p>No hay turnos registrados.</p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

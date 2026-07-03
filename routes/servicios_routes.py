@@ -30,7 +30,7 @@ def editar(id):
     servicio = db.session.get(Servicio, id)
 
     if not servicio:
-        return "Cliente no encontrado"
+        return "Servicio no encontrado"
 
     if request.method == "POST":
         servicio.nombre = request.form["nombre"]
