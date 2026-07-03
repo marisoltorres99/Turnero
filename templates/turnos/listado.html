@@ -34,17 +34,11 @@
 
             <td>
             <a href="{{ url_for('turno.editar', id=t.id) }}">Editar</a>
-            
-            {% if s.activo %}
+
+            {% if t.estado != "Cancelado" %}
 
             <form method="POST" action="{{ url_for('turno.cancelar', id=t.id) }}" style="display:inline;">
                 <button type="submit">Cancelar</button>
-            </form>
-
-            {% else %}
-
-            <form method="POST" action="{{ url_for('servicio.activar', id=s.id) }}" style="display:inline;">
-                <button type="submit">Activar</button>
             </form>
 
             {% endif %}

@@ -13,13 +13,47 @@
 <form method="POST">
 
     <div>
-        <label>Fecha y Hora</label>
-        <input type="datetime-local" name="fecha_hora" required>
+        <label>Cliente</label>
+        <select name="cliente_id" required>
+            {% for c in clientes %}
+            <option value="{{ c.id }}" {% if turno and turno.cliente_id == c.id %}selected{% endif %}>
+                {{ c.nombre }} {{ c.apellido }}
+            </option>
+            {% endfor %}
+        </select>
     </div>
 
     <div>
+        <label>Servicio</label>
+        <select name="servicio_id" required>
+            {% for s in servicios %}
+            <option value="{{ s.id }}" {% if turno and turno.servicio_id == s.id %}selected{% endif %}>
+                {{ s.nombre }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label>Fecha y Hora</label>
+        <input type="datetime-local" name="fecha_hora" value="{{ turno.fecha_hora.strftime('%Y-%m-%dT%H:%M') if turno else '' }}" required>
+    </div>
+
+    {% if turno %}
+    <div>
+        <label>Estado</label>
+        <select name="estado">
+            <option value="Pendiente" {% if turno.estado == "Pendiente" %}selected{% endif %}>Pendiente</option>
+            <option value="Confirmado" {% if turno.estado == "Confirmado" %}selected{% endif %}>Confirmado</option>
+            <option value="Cancelado" {% if turno.estado == "Cancelado" %}selected{% endif %}>Cancelado</option>
+            <option value="Realizado" {% if turno.estado == "Realizado" %}selected{% endif %}>Realizado</option>
+        </select>
+    </div>
+    {% endif %}
+
+    <div>
         <label>Observaciones</label>
-        <input type="text" name="observaciones" value="{{ servicio.observaciones if servicio else '' }}">
+        <input type="text" name="observaciones" value="{{ turno.observaciones if turno else '' }}">
     </div>
 
     <button type="submit">
