@@ -4,6 +4,71 @@
 
 <h1>Dashboard</h1>
 
-<p>Bienvenido al sistema de turnos.</p>
+<p>Clientes activos: {{ cantidad_clientes }}</p>
+<p>Servicios activos: {{ cantidad_servicios }}</p>
+
+<h2>Turnos de hoy</h2>
+
+{% if turnos_hoy %}
+
+<table>
+
+    <tr>
+        <th>Fecha y Hora</th>
+        <th>Cliente</th>
+        <th>Servicio</th>
+        <th>Estado</th>
+    </tr>
+
+    {% for t in turnos_hoy %}
+
+    <tr>
+        <td>{{ t.fecha_hora }}</td>
+        <td>{{ t.cliente.nombre }} {{ t.cliente.apellido }}</td>
+        <td>{{ t.servicio.nombre }}</td>
+        <td>{{ t.estado }}</td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% else %}
+
+<p>No hay turnos para hoy.</p>
+
+{% endif %}
+
+<h2>Proximos turnos</h2>
+
+{% if proximos_turnos %}
+
+<table>
+
+    <tr>
+        <th>Fecha y Hora</th>
+        <th>Cliente</th>
+        <th>Servicio</th>
+        <th>Estado</th>
+    </tr>
+
+    {% for t in proximos_turnos %}
+
+    <tr>
+        <td>{{ t.fecha_hora }}</td>
+        <td>{{ t.cliente.nombre }} {{ t.cliente.apellido }}</td>
+        <td>{{ t.servicio.nombre }}</td>
+        <td>{{ t.estado }}</td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% else %}
+
+<p>No hay proximos turnos.</p>
+
+{% endif %}
 
 {% endblock %}
