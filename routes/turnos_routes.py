@@ -30,6 +30,12 @@ def _verificar_superposicion(fecha_hora, cliente_id, servicio_id, turno_id=None)
 
     return None
 
+def _verificar_fecha_pasada(fecha_hora):
+    if fecha_hora < datetime.now():
+        return "No se puede agendar un turno en una fecha y hora pasada."
+
+    return None
+
 @turnos_bp.route("/")
 def listar():
     turnos = Turno.query.all()
@@ -46,7 +52,7 @@ def nuevo():
         cliente_id = request.form["cliente_id"]
         servicio_id = request.form["servicio_id"]
 
-        error = _verificar_superposicion(fecha_hora, cliente_id, servicio_id)
+        error = _verificar_fecha_pasada(fecha_hora) or _verificar_superposicion(fecha_hora, cliente_id, servicio_id)
         if error:
             return render_template(
                 "turnos/form.html", clientes=clientes, servicios=servicios, error=error,
@@ -82,17 +88,22 @@ def editar(id):
         cliente_id = request.form["cliente_id"]
         servicio_id = request.form["servicio_id"]
 
-        if estado in ESTADOS_ACTIVOS:
+        error = None
+        if fecha_hora != turno.fecha_hora:
+            error = _verificar_fecha_pasada(fecha_hora)
+
+        if not error and estado in ESTADOS_ACTIVOS:
             error = _verificar_superposicion(fecha_hora, cliente_id, servicio_id, turno_id=turno.id)
-            if error:
-                turno.fecha_hora = fecha_hora
-                turno.estado = estado
-                turno.observaciones = request.form["observaciones"]
-                turno.cliente_id = cliente_id
-                turno.servicio_id = servicio_id
-                return render_template(
-                    "turnos/form.html", turno=turno, clientes=clientes, servicios=servicios, error=error,
-                )
+
+        if error:
+            turno.fecha_hora = fecha_hora
+            turno.estado = estado
+            turno.observaciones = request.form["observaciones"]
+            turno.cliente_id = cliente_id
+            turno.servicio_id = servicio_id
+            return render_template(
+                "turnos/form.html", turno=turno, clientes=clientes, servicios=servicios, error=error,
+            )
 
         turno.fecha_hora = fecha_hora
         turno.estado = estado
